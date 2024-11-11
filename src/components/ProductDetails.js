@@ -38,25 +38,29 @@ const ProductDetails = () => {
 
   return (
     <div className="product-detail">
-      <img src={product.image} alt={product.title} />
-      <h2>{product.title}</h2>
-      <p>{product.description}</p>
-      <p>${product.price}</p>
-      <div className="rating">
-        <strong>Rating:</strong> {product.rating.rate} ({product.rating.count} reviews)
+      <div className="product-image">
+        <img src={product.image} alt={product.title} />
       </div>
-      <div className="quantity">
-        <label htmlFor="quantity">Quantity:</label>
-        <input
-          type="number"
-          id="quantity"
-          name="quantity"
-          min="1"
-          value={quantity}
-          onChange={(e) => setQuantity(e.target.value)}
-        />
+      <div className="product-info">
+        <h2>{product.title}</h2>
+        <p>{product.description}</p>
+        <p>${product.price}</p>
+        <div className="rating">
+          <strong>Rating:</strong> {product.rating.rate} ({product.rating.count} reviews)
+        </div>
+        <div className="quantity">
+          <label htmlFor="quantity">Quantity:</label>
+          <input
+            type="number"
+            id="quantity"
+            name="quantity"
+            min="1"
+            value={quantity}
+            onChange={(e) => setQuantity(e.target.value)}
+          />
+        </div>
+        <button onClick={handleAddToCart}>Add to Cart</button>
       </div>
-      <button onClick={handleAddToCart}>Add to Cart</button>
     </div>
   );
 };
