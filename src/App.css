@@ -1,0 +1,120 @@
+/* General Styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.App {
+  text-align: center;
+}
+
+.App-header {
+  background-color: #008AD8;
+  color: white;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.App-header h1 {
+  margin: 0;
+}
+
+.App-header nav {
+  display: flex;
+  gap: 20px;
+}
+
+.App-header nav a {
+  color: white;
+  text-decoration: none;
+}
+
+.App-header .cart-icon {
+  position: relative;
+}
+
+.App-header .cart-icon::after {
+  content: '10';
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: red;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 12px;
+}
+
+/* Main Content */
+.main-content {
+  display: flex;
+  padding: 20px;
+}
+
+.filters {
+  width: 20%;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.filters label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.product-list {
+  width: 80%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding: 10px;
+}
+
+.product-item {
+  border: 1px solid #ddd;
+  margin: 10px;
+  padding: 10px;
+  width: 200px;
+  text-align: left;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.product-item img {
+  width: 100%;
+  height: auto;
+}
+
+.product-item h2 {
+  font-size: 18px;
+  margin: 10px 0;
+}
+
+.product-item p {
+  margin: 5px 0;
+}
+
+.loading {
+  font-size: 20px;
+  margin: 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .main-content {
+    flex-direction: column;
+  }
+
+  .filters {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .product-list {
+    width: 100%;
+  }
+}

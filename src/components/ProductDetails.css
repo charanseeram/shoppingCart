@@ -1,0 +1,51 @@
+.product-detail {
+    text-align: left;
+    padding: 20px;
+  }
+  
+  .product-detail img {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+  }
+  
+  .product-detail h2 {
+    font-size: 24px;
+    margin: 10px 0;
+  }
+  
+  .product-detail p {
+    font-size: 18px;
+    margin: 5px 0;
+  }
+  
+  .rating {
+    font-size: 16px;
+    margin: 10px 0;
+  }
+  
+  .quantity {
+    margin: 10px 0;
+  }
+  
+  .quantity label {
+    margin-right: 10px;
+  }
+  
+  .quantity input {
+    width: 50px;
+    padding: 5px;
+  }
+  
+  button {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  button:hover {
+    background-color: #218838;
+  }
