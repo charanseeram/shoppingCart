@@ -7,7 +7,7 @@ import ErrorMessage from './utils/ErrorMessage';
 
 const ProductList = lazy(() => import('./components/ProductList'));
 const ProductDetails = lazy(() => import('./components/ProductDetails'));
-const CategoryPage = lazy(() => import('./components/CategoryPage '));
+const CategoryPage = lazy(() => import('./components/CategoryPage'));
 const Filter = lazy(() => import('./filters/Filter'));
 const Sort = lazy(() => import('./filters/Sort'));
 const SearchBar = lazy(() => import('./filters/SearchBar'));
@@ -43,48 +43,79 @@ function App() {
     }, 1000); // Simulate network delay
   };
 
+  const onFilter = (category) => {
+    if (category === 'All') {
+      setDisplayedProducts(products.slice(0, 10));
+    } else {
+      const filteredProducts = products.filter(product => product.category === category);
+      setDisplayedProducts(filteredProducts.slice(0, 10));
+    }
+  };
+
+  const onSearch = (query) => {
+    const filteredProducts = products.filter(product =>
+      product.title.toLowerCase().includes(query.toLowerCase())
+    );
+    setDisplayedProducts(filteredProducts.slice(0, 10));
+  };
+
+  const onSort = (sortOption) => {
+    let sortedProducts = [...displayedProducts];
+    switch (sortOption) {
+      case 'Price: Low to High':
+        sortedProducts.sort((a, b) => a.price - b.price);
+        break;
+      case 'Price: High to Low':
+        sortedProducts.sort((a, b) => b.price - a.price);
+        break;
+      case 'Name: A to Z':
+        sortedProducts.sort((a, b) => a.title.localeCompare(b.title));
+        break;
+      case 'Name: Z to A':
+        sortedProducts.sort((a, b) => b.title.localeCompare(a.title));
+        break;
+      default:
+        break;
+    }
+    setDisplayedProducts(sortedProducts);
+  };
+
   return (
     <Router>
       <div className="App">
         <header className="App-header">
-          <h1>VENIA</h1>
-          <nav>
-            <Link to="/">Home</Link>
-            <Link to="/women">Women</Link>
-            <Link to="/men">Men</Link>
-            <Link to="/jewelery">Jewelery</Link>
+          <h1 className="App-title">VENIA</h1>
+          <nav className="App-nav">
+            <Link to="/" className="App-link">Home</Link>
+            <Link to="/category/men's clothing" className="App-link">Men</Link>
+            <Link to="/category/women's clothing" className="App-link">Women</Link>
+            <Link to="/category/jewelery" className="App-link">Jewelery</Link>
           </nav>
-          <div className="cart-icon">🛒</div>
+          <span role="img" aria-label="cart" className="App-cart">🛒</span>
         </header>
-        <div className="main-content">
+        <main className="App-main">
           <Suspense fallback={<LoadingIndicator />}>
             <Routes>
               <Route path="/" element={
                 <>
-                  <div className="filters">
-                    <SearchBar onSearch={(query) => console.log(query)} />
-                    <Filter />
-                    <Sort />
-                  </div>
-                  <div className="product-list">
-                    {loading && <LoadingIndicator />}
-                    {error && <ErrorMessage message={error} />}
-                    {!loading && !error && <ProductList products={displayedProducts} />}
-                    {!loading && !error && displayedProducts.length < products.length && (
-                      <button onClick={handleLoadMore} disabled={loadMore}>
-                        {loadMore ? 'Loading...' : 'Load More'}
-                      </button>
-                    )}
-                  </div>
+                  <SearchBar onSearch={onSearch} className="App-searchbar" />
+                  <Filter onFilter={onFilter} className="App-filter" />
+                  <Sort onSort={onSort} className="App-sort" />
+                  {loading && <LoadingIndicator className="App-loading" />}
+                  {error && <ErrorMessage message={error} className="App-error" />}
+                  {!loading && !error && <ProductList products={displayedProducts} className="App-productlist" />}
+                  {!loading && !error && displayedProducts.length < products.length && (
+                    <button onClick={handleLoadMore} className="App-loadmore">
+                      {loadMore ? 'Loading...' : 'Load More'}
+                    </button>
+                  )}
                 </>
               } />
-              <Route path="/women" element={<CategoryPage products={products} category="women's clothing" />} />
-              <Route path="/men" element={<CategoryPage products={products} category="men's clothing" />} />
-              <Route path="/jewelery" element={<CategoryPage products={products} category="jewelery" />} />
-              <Route path="/product/:id" element={<ProductDetails />} />
+              <Route path="/product/:id" element={<ProductDetails className="App-productdetails" />} />
+              <Route path="/category/:name" element={<CategoryPage products={products} />} />
             </Routes>
           </Suspense>
-        </div>
+        </main>
       </div>
     </Router>
   );
